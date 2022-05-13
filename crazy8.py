@@ -6,6 +6,7 @@ import random
 import copy
 
 class LinkedList:
+    # TODO standardize empty list check! either size==0 or head is None 
     class _Node:
         def __init__(self, v, n=None):
             self.value = v
@@ -17,7 +18,7 @@ class LinkedList:
 
     def __str__(self):
         if self._size == 0:
-            return 'empty list'
+            return '[]'
         result = '['
         current = self._head
         while current:
@@ -56,6 +57,8 @@ class LinkedList:
 
     # Removes and returns the first node of the list
     def pop(self):
+        if self._size == 0:
+            return None
         result = self._head.value
         self._head = self._head.next
         self._size -= 1
@@ -63,6 +66,8 @@ class LinkedList:
 
     # Returns the value of the first node of the list
     def peek(self):
+        if self._size == 0:
+            return None
         return self._head.value
 
     # Removes the first node of the list with value v and return v
@@ -89,6 +94,8 @@ class CircularLinkedList(LinkedList):
         super().__init__()
     
     def __str__(self):
+        if self._head is None:
+            return '[]'
         result = '['
         current = self._head
         for i in range(self._size):
@@ -97,12 +104,11 @@ class CircularLinkedList(LinkedList):
         return result[:-2] + ']'
 
     def __iter__(self):
-        #TO DO
-        pass
-
+        return self
     # Moves head pointer to next node in list
     def next(self):
-        self._head = self._head.next
+        if self._head is not None:
+            self._head = self._head.next
 
     # Adds a node of value v to the end of the list
     def append(self, v):
@@ -118,7 +124,7 @@ class CircularLinkedList(LinkedList):
 
     # Reverses the next pointers of all nodes to previous node
     def reverse(self):
-        if self._head is None:
+        if self._size == 0:
             return None
         prev = None
         current = self._head
@@ -135,6 +141,8 @@ class CircularLinkedList(LinkedList):
 
     # Removes head node and returns its value
     def pop(self):
+        if self._size == 0:
+            return None
         result = self._head.value
         current = self._head
         for i in range(self._size - 1):
@@ -156,8 +164,16 @@ class Card:
         return self._rank + self.suits[self._suit]
 
     def __eq__(self, other):
-        #TO DO
-        pass
+        if self._suit == other._suit:
+            if self._rank == other._rank:
+                return True
+            elif self._rank in ['1', 'A'] and other._rank in ['1', 'A']:
+                return True
+        else:
+            return False
+
+
+        return self._rank == other._rank and self._suit == other._suit
 
 class Hand:
     def __init__(self):
@@ -187,10 +203,30 @@ class Hand:
 
     # Returns a card included in the hand according to
     # the criteria contained in *args and None if the card
-    # isn't in the hand. The tests show how *args must be used.
+        # isn't in the hand. The tests show how *args must be used.
     def play(self, *args):
-        #TO DO
-        pass
+        if args is None:
+            return None
+        ranks = ['1', 'a', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'J', 'q', 'Q', 'k', 'K'] 
+        suits = ['s', 'h', 'd', 'c']
+        # unpack the *args
+        suit = None
+        rank = None
+        for x in args:
+            if x in suits:
+                suit = x
+            if x in ranks:
+                rank = x
+        if suit and not rank:
+            return self.cards[suit].pop()
+        elif suit and rank:
+            return self.cards[suit].remove(Card(rank, suit))
+        elif rank and not suit:
+            for s in suits:
+                card = self.cards[s].remove(Card(rank, s))
+                if card:
+                    return card
+            return None
 
 class Deck(LinkedList):
     def __init__(self, custom=False):
@@ -218,23 +254,36 @@ class Deck(LinkedList):
         return self.pop()
 
     def shuffle(self, cut_precision = 0.05):
+        # TODO: do we have to make 2 new Deck() instances??
+
         # Cutting the two decks in two
         center = len(self) / 2
         k = round(random.gauss(center, cut_precision*len(self)))
-
         # other_deck must point the kth node in self
         # (starting at 0 of course)
-        # other_deck = #TO DO
-
-        #TO DO: seperate both lists
-
-        # Merging the two decks together
-        if random.uniform(0,1) < 0.5:
-            pass
-            #switch self._head and other_deck pointers
-        
-        #TO DO
-
+        current = self._head
+        for i in range(k-1):
+            current = current.next
+        other = current.next
+        other_deck = Deck(custom=True)
+        other_deck._head = other
+        other_deck._size = self._size - k
+        print("other deck ", other_deck)
+         
+        current.next = None
+        self._size = k
+        print("deck ", self)
+        #if random.uniform(0,1) < 0.5:
+        #    pass
+        current = self._head
+        other = other_deck._head
+        for i in range(k):
+            current_next = current.next
+            other_next = other.next
+            current.next = other
+            other.next = current_next 
+            current = current_next
+            other = other_next
 
 class Player():
     def __init__(self, name, strategy='naive'):
@@ -385,6 +434,8 @@ if __name__ == '__main__':
     l.append('a')
     l.append('b')
     l.append('c')
+
+
     assert(str(l) == '[a, b, c]')
     l.next()
     assert(str(l) == '[b, c, a]')
@@ -396,6 +447,7 @@ if __name__ == '__main__':
     assert(str(l) == '[a, c, b]')
     assert(l.pop() == 'a')
     assert(str(l) == '[c, b]')
+    
     print("All tests passed!")
 
     '''
