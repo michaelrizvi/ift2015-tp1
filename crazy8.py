@@ -36,7 +36,6 @@ class LinkedList:
     def add(self, v):
         if self._head is None:
             self._head = self._Node(v)
-            self._tail = self._head
         else:
             new_node = self._Node(v)
             temp = self._head
@@ -48,10 +47,11 @@ class LinkedList:
     def append(self,v):
         if self._size == 0:
             self._head = self._Node(v)
-            self._tail = self._head
         else:
-            self._tail.next = self._Node(v)
-            self._tail = self._tail.next
+            current = self._head
+            while current.next:
+                current = current.next
+            current.next = self._Node(v)
         self._size += 1
 
     # Removes and returns the first node of the list
@@ -75,8 +75,6 @@ class LinkedList:
         prev = self._head
         while current:
             if current.value == v:
-                if current.next is None:
-                    self._tail = prev
                 prev.next = current.next 
                 current.next = None
                 self._size -= 1
@@ -93,7 +91,7 @@ class CircularLinkedList(LinkedList):
     def __str__(self):
         result = '['
         current = self._head
-        for i in range(self._size - 1):
+        for i in range(self._size):
             result += str(current.value) + ', '
             current = current.next
         return result[:-2] + ']'
@@ -108,11 +106,15 @@ class CircularLinkedList(LinkedList):
 
     # Adds a node of value v to the end of the list
     def append(self, v):
-        current = self._head
-        for i in range(self._size - 1):
-            current = current.next
-        current.next = self._Node(v, self._head)
-        #make it loop back to first elem
+        if self._size == 0:
+            self._head = self._Node(v)
+            self._head.next = self._head
+        else:
+            current = self._head
+            for i in range(self._size - 1):
+                current = current.next
+            current.next = self._Node(v, self._head)
+        self._size += 1
 
     # Reverses the next pointers of all nodes to previous node
     def reverse(self):
@@ -122,14 +124,14 @@ class CircularLinkedList(LinkedList):
         current = self._head
         next_node = current.next  
         current.next = prev
+        prev = current
         current = next_node
-        while current != self._head:
+        for i in range(self._size - 1):
             next_node = current.next
             current.next = prev
             prev = current
-            current = next
+            current = next_node
         self._head.next = prev
-        self._head = prev
 
     # Removes head node and returns its value
     def pop(self):
@@ -140,6 +142,8 @@ class CircularLinkedList(LinkedList):
         current.next = current.next.next 
         self._head.next = None
         self._head = current.next
+        self._size -= 1
+        return result
 
 class Card:
     def __init__(self, r, s):
@@ -381,8 +385,6 @@ if __name__ == '__main__':
     l.append('a')
     l.append('b')
     l.append('c')
-    print(l)
-    '''
     assert(str(l) == '[a, b, c]')
     l.next()
     assert(str(l) == '[b, c, a]')
@@ -394,7 +396,7 @@ if __name__ == '__main__':
     assert(str(l) == '[a, c, b]')
     assert(l.pop() == 'a')
     assert(str(l) == '[c, b]')
-    '''
+    print("All tests passed!")
 
     '''
     random.seed(420)
