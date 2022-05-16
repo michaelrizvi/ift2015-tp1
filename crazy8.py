@@ -1,4 +1,4 @@
-# Prénom, Nom, Matricule
+# Michael Rizvi-Martel, 20223775
 # Prénom, Nom, Matricule
 
 import math
@@ -259,31 +259,42 @@ class Deck(LinkedList):
         # Cutting the two decks in two
         center = len(self) / 2
         k = round(random.gauss(center, cut_precision*len(self)))
-        # other_deck must point the kth node in self
-        # (starting at 0 of course)
+        deck_size = len(self)
+        k = 3
+        print(k)
+
+        # Go to the k-1nth index
         current = self._head
         for i in range(k-1):
             current = current.next
+
+        # Create other deck
         other = current.next
         other_deck = Deck(custom=True)
         other_deck._head = other
         other_deck._size = self._size - k
-        print("other deck ", other_deck)
          
+        # Shrink deck
         current.next = None
         self._size = k
-        print("deck ", self)
-        #if random.uniform(0,1) < 0.5:
-        #    pass
+        print(len(self), len(other_deck))
+
+        # Shuffle
         current = self._head
         other = other_deck._head
-        for i in range(k):
+        #if random.uniform(0,1) < 0.5:
+        #    current = other_deck._head
+        #    other = self._head
+
+        for i in range(min(k, deck_size-k)):
             current_next = current.next
             other_next = other.next
             current.next = other
             other.next = current_next 
             current = current_next
             other = other_next
+        self._size = deck_size
+        print(len(self))
 
 class Player():
     def __init__(self, name, strategy='naive'):
@@ -302,10 +313,38 @@ class Player():
     # on his own cards, the discard pile, and
     # the number of cards his opponents hold.
     def play(self, game):
+        ranks = ['1', 'a', 'A', '2', '3', '4', '5', '6', '7', '9', '10', 'j', 'J', 'q', 'Q', 'k', 'K'] 
         if(self.strategy == 'naive'):
             top_card = game.discard_pile.peek()
+            top_suit = top_card.suit
+            top_rank = top_card.rank
 
-            #TO DO
+            # If forced to pickup play a 2 or a Q of Spades
+            if top_rank == '2' or (top_rank == 'Q' and top_suit == 's'):
+                card = self.hand.play('2')
+                if card:
+                    game.discard_pile.add(card)
+                else:
+                    card = self.hand.play('Q', 's')
+                    game.discard_pile.add(card) if card else None
+            else:  
+                # If same suit play first card of same suit that isnt wildcard 
+                for rank in ranks:
+                    card = self.hand.play(top_suit, rank)
+                    if card:
+                        game.discard_pile.add(card)
+                        return game  
+                
+                # If not same suit play card of same rank
+                card = self.hand.play(top_rank)
+                if card:
+                    game.discard_pile.add(card)
+                
+                # Else play a wildcard and declare most frequent suit
+                else:
+                    self.hand.play('8')
+                    game.declared_suit = self.hand.get_most_common_suit()
+                    game.discard_pile.add(card) if card else None
 
             return game
 
@@ -350,9 +389,14 @@ class Game:
     # Safe way of drawing a card from the deck
     # that resets it if it is empty after card is drawn
     def draw_from_deck(self, num):
-        #TO DO
-        pass
-            
+        draw_list = LinkedList()
+        if self.deck.isEmpty():
+            self.reset_deck()
+        for n in range(num):
+            draw_list.append(self.deck.draw())
+            if self.deck.isEmpty():
+                self.reset_deck()
+        return draw_list 
 
     def start(self, debug=False):
         # Ordre dans lequel les joeurs gagnent la partie
@@ -386,8 +430,8 @@ class Game:
 
             # Player didn't play a card => must draw from pile
             if new_top_card == old_top_card:
-               #TO DO
-               pass
+               card_list = self.draw_from_deck(1) 
+               player.hand.append(card_list.peek())
             # Player played a card
             else:
                 #TO DO
