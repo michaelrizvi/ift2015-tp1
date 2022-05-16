@@ -104,7 +104,11 @@ class CircularLinkedList(LinkedList):
         return result[:-2] + ']'
 
     def __iter__(self):
-        return self
+        current = self._head
+        for i in range(self._size - 1):
+            yield current 
+            current = current.next
+
     # Moves head pointer to next node in list
     def next(self):
         if self._head is not None:
@@ -254,14 +258,10 @@ class Deck(LinkedList):
         return self.pop()
 
     def shuffle(self, cut_precision = 0.05):
-        # TODO: do we have to make 2 new Deck() instances??
-
         # Cutting the two decks in two
         center = len(self) / 2
         k = round(random.gauss(center, cut_precision*len(self)))
         deck_size = len(self)
-        k = 3
-        print(k)
 
         # Go to the k-1nth index
         current = self._head
@@ -277,24 +277,26 @@ class Deck(LinkedList):
         # Shrink deck
         current.next = None
         self._size = k
-        print(len(self), len(other_deck))
 
         # Shuffle
         current = self._head
         other = other_deck._head
-        #if random.uniform(0,1) < 0.5:
-        #    current = other_deck._head
-        #    other = self._head
+        if random.uniform(0,1) < 0.5:
+            current = other_deck._head
+            other = self._head
+            self._head = other_deck._head
 
         for i in range(min(k, deck_size-k)):
             current_next = current.next
             other_next = other.next
+            
             current.next = other
-            other.next = current_next 
+            if current_next:
+                other.next = current_next 
             current = current_next
             other = other_next
+
         self._size = deck_size
-        print(len(self))
 
 class Player():
     def __init__(self, name, strategy='naive'):
@@ -383,12 +385,14 @@ class Game:
     # top card back into the deck in reverse order
     # and shuffles it 7 times
     def reset_deck(self):
+        top_card = self.discard_pile.pop()
         #TO DO
         pass
 
     # Safe way of drawing a card from the deck
     # that resets it if it is empty after card is drawn
     def draw_from_deck(self, num):
+        # TODO: better way than to return a LinkedList?
         draw_list = LinkedList()
         if self.deck.isEmpty():
             self.reset_deck()

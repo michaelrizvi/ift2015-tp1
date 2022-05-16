@@ -66,7 +66,6 @@ if __name__ == '__main__':
     assert(str(h) == '[8♠, A♠][8♡][Q♢][3♣]')
     assert(str(h.play('8')) == '8♠')
     assert(str(h.play('c')) == '3♣')
-    print(h)
     assert(str(h) == '[A♠][8♡][Q♢][]')
     assert(h.play('d','Q') == Card('Q','d'))
     assert(h.play('1') == Card('A','s'))
@@ -81,10 +80,29 @@ if __name__ == '__main__':
     d.append(Card('A','h'))
     d.append(Card('2','h'))
     d.append(Card('3','h'))
+
+    random.seed(15)
+
+    temp = copy.deepcopy(d)
+    assert(str(temp) == '[A♠, 2♠, 3♠, A♡, 2♡, 3♡]')
+    temp.shuffle()
+    assert(str(temp) == '[A♠, A♡, 2♠, 2♡, 3♠, 3♡]')
+    temp = copy.deepcopy(d)
+    temp.shuffle()
+    assert(str(temp) == '[A♡, A♠, 2♡, 2♠, 3♡, 3♠]')
+    assert(d.draw() == Card('A','s'))
+    print("Deck: All tests passed!")
+    '''
+    d = Deck(custom=True)
+    d.append(Card('A','s'))
+    d.append(Card('2','s'))
+    d.append(Card('3','s'))
+    d.append(Card('A','h'))
+    d.append(Card('2','h'))
+    d.append(Card('3','h'))
     print(d)
     d.shuffle()
     print(d)
-    '''
     random.seed(15)
 
     temp = copy.deepcopy(d)
