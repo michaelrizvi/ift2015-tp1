@@ -35,7 +35,7 @@ class LinkedList:
 
     # Adds a node of value v to the beginning of the list
     def add(self, v):
-        if self._head is None:
+        if self._size == 0:
             self._head = self._Node(v)
         else:
             new_node = self._Node(v)
@@ -72,7 +72,7 @@ class LinkedList:
 
     # Removes the first node of the list with value v and return v
     def remove(self, v):
-        if self._head is None:
+        if self._size == 0:
             return None 
         if self._head.value == v:
             return self.pop()
@@ -105,8 +105,8 @@ class CircularLinkedList(LinkedList):
 
     def __iter__(self):
         current = self._head
-        for i in range(self._size - 1):
-            yield current 
+        for i in range(self._size):
+            yield current.value
             current = current.next
 
     # Moves head pointer to next node in list
@@ -268,6 +268,9 @@ class Deck(LinkedList):
         for i in range(k-1):
             current = current.next
 
+        #print(len(self))
+        #print(k)
+        #print(self)
         # Create other deck
         other = current.next
         other_deck = Deck(custom=True)
@@ -289,7 +292,6 @@ class Deck(LinkedList):
         for i in range(min(k, deck_size-k)):
             current_next = current.next
             other_next = other.next
-            
             current.next = other
             if current_next:
                 other.next = current_next 
@@ -318,8 +320,8 @@ class Player():
         ranks = ['1', 'a', 'A', '2', '3', '4', '5', '6', '7', '9', '10', 'j', 'J', 'q', 'Q', 'k', 'K'] 
         if(self.strategy == 'naive'):
             top_card = game.discard_pile.peek()
-            top_suit = top_card.suit
-            top_rank = top_card.rank
+            top_suit = top_card._suit
+            top_rank = top_card._rank
 
             # If forced to pickup play a 2 or a Q of Spades
             if top_rank == '2' or (top_rank == 'Q' and top_suit == 's'):
@@ -328,12 +330,14 @@ class Player():
                     game.discard_pile.add(card)
                 else:
                     card = self.hand.play('Q', 's')
-                    game.discard_pile.add(card) if card else None
+                    if card:
+                        game.discard_pile.add(card)
             else:  
                 # If same suit play first card of same suit that isnt wildcard 
                 for rank in ranks:
                     card = self.hand.play(top_suit, rank)
                     if card:
+                        print(f"{self.name} plays {card}")
                         game.discard_pile.add(card)
                         return game  
                 
@@ -344,10 +348,12 @@ class Player():
                 
                 # Else play a wildcard and declare most frequent suit
                 else:
-                    self.hand.play('8')
+                    self.hand.play(str(self.score))
                     game.declared_suit = self.hand.get_most_common_suit()
-                    game.discard_pile.add(card) if card else None
-
+                    if card:
+                        game.discard_pile.add(card)
+            if card:
+                print(f"{self.name} plays {card}")
             return game
 
         else:
@@ -373,7 +379,7 @@ class Game:
         result += 'Declared Suit: ' + str(self.declared_suit) + ', '
         result += 'Draw Count: ' + str(self.draw_count) + ', '
         result += 'Top Card: ' + str(self.discard_pile.peek()) + '\n'
-
+        
         for player in self.players:
             result += str(player) + ': '
             result += 'Score: ' + str(player.score) + ', '
@@ -386,8 +392,15 @@ class Game:
     # and shuffles it 7 times
     def reset_deck(self):
         top_card = self.discard_pile.pop()
-        #TO DO
-        pass
+        discard_size = len(self.discard_pile)
+        print("discard_size: ",discard_size)
+        #print("discard: ", discard_size)
+        for i in range(discard_size):
+            self.deck.append(self.discard_pile.pop())
+        for i in range(7):
+            self.deck.shuffle()
+        if top_card:
+            self.discard_pile.add(top_card)
 
     # Safe way of drawing a card from the deck
     # that resets it if it is empty after card is drawn
@@ -407,7 +420,7 @@ class Game:
         result = LinkedList()
 
         self.reset_deck()
-
+        print("Initial deck: ", self.deck)
         # Each player draws 8 cards
         for player in self.players:
             for i in range(8):
@@ -418,9 +431,11 @@ class Game:
         transcript = open('result.txt','w',encoding='utf-8')
         if debug:
             transcript = open('result_debug.txt','w',encoding='utf-8')
-
+        
+        position = 0
         while(not self.players.isEmpty()):
             if debug:
+                print(str(self))
                 transcript.write(str(self))
 
             # player plays turn
@@ -434,71 +449,56 @@ class Game:
 
             # Player didn't play a card => must draw from pile
             if new_top_card == old_top_card:
-               card_list = self.draw_from_deck(1) 
-               player.hand.append(card_list.peek())
+                if new_top_card._rank == '2':
+                    print(f"{player.name} draws 2 cards")
+                    card_list = self.draw_from_deck(2) 
+                    for i in range(2):
+                        player.hand.add(card_list.pop())
+                elif new_top_card._rank == 'Q':
+                    print(f"{player.name} draws 5 cards")
+                    card_list = self.draw_from_deck(5) 
+                    for i in range(5):
+                        player.hand.add(card_list.pop())
+                else:
+                    print(f"{player.name} draws 1 cards")
+                    card_list = self.draw_from_deck(1) 
+                    player.hand.add(card_list.pop())
             # Player played a card
             else:
-                #TO DO
-                pass
+                if new_top_card._rank == str(player.score):
+                    self.declared_suit = new_top_card.suit
+                # if ace, change the order
+                if new_top_card._rank == 'A':
+                    self.players.reverse()
+                # if J skip player
+                elif new_top_card._rank == 'J':
+                    self.players.next() # Skip next player's turn
+
             # Handling player change
             # Player has finished the game
-            if len(player.hand) == 0 and player.score == 1:
-                #TO DO
-                pass
+            if len(player.hand) == 0 and player.score == 1: #TO DO
+                # increment player position    
+                position += 1
+                print(f"{player.name} finishes in position {position}")
+                players.remove(player)
             else:
                 # Player is out of cards to play
                 if len(player.hand) == 0:
-                    #TO DO
-                    pass
+                    player.score -= 1
+                    print(f"{player.name} is out of cards to play! {player.name} draws {player.score} cards")
+                    cards = self.deck.draw(player.score)
+                    for i in range(player.score):
+                        player.hand.add(cards.pop())
+
                 # Player has a single card left to play
                 elif len(player.hand) == 1:
-                    #TO DO
-                    pass
+                    print(f"*Knock, knock* - {player.name} has a single card left!")
+
                 self.players.next()
         return result
 
 
 if __name__ == '__main__':
-    # LinkedList
-    l = LinkedList()
-    l.append('b')
-    l.append('c')
-    l.add('a')
-    
-    assert(str(l) == '[a, b, c]')
-    assert(l.pop() == 'a')
-    assert(len(l) == 2)
-    assert(str(l.remove('c')) == 'c')
-    assert(l.remove('d') == None)
-    assert(str(l) == '[b]')
-    assert(l.peek() == 'b')
-    assert(l.pop() == 'b')
-    assert(len(l) == 0)
-    assert(l.isEmpty())
-    print("All tests passed!")
-
-    # Circular linkedlist
-    l = CircularLinkedList()
-    l.append('a')
-    l.append('b')
-    l.append('c')
-
-
-    assert(str(l) == '[a, b, c]')
-    l.next()
-    assert(str(l) == '[b, c, a]')
-    l.next()
-    assert(str(l) == '[c, a, b]')
-    l.next()
-    assert(str(l) == '[a, b, c]')
-    l.reverse()
-    assert(str(l) == '[a, c, b]')
-    assert(l.pop() == 'a')
-    assert(str(l) == '[c, b]')
-    
-    print("All tests passed!")
-
-    '''
     random.seed(420)
     game = Game()
     print(game.start(debug=True))
@@ -588,4 +588,3 @@ if __name__ == '__main__':
     temp.shuffle()
     assert(str(temp) == '[A♡, A♠, 2♡, 2♠, 3♡, 3♠]')
     assert(d.draw() == Card('A','s'))
-    '''
