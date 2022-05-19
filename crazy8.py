@@ -338,9 +338,12 @@ class Player():
                 if len(self.hand.cards[top_suit]) > 0:
                     current = self.hand.cards[top_suit]._head
                     rank_for_suit = None
+                    print("current value", current.value._rank)
+                    print("score", self.score)
                     while current.next:
                         if current.value._rank != str(self.score):
                             rank_for_suit = current.value._rank
+                            break
                         current = current.next
                     card = self.hand.play(top_suit, rank_for_suit)
 
@@ -355,7 +358,7 @@ class Player():
                     
                     # Else play a wildcard and declare most frequent suit
                     else:
-                        self.hand.play(str(self.score))
+                        card = self.hand.play(str(self.score))
                         game.declared_suit = self.hand.get_most_common_suit()
                         if card:
                             game.discard_pile.add(card)
@@ -469,7 +472,7 @@ class Game:
                         player.hand.add(card_list.pop())
                     self.draw_count = 0
                 else:
-                    print(f"{player.name} draws 1 cards")
+                    print(f"{player.name} draws 1 card")
                     card_list = self.draw_from_deck(1) 
                     player.hand.add(card_list.pop())
             # Player played a card
@@ -492,7 +495,7 @@ class Game:
                 # increment player position    
                 position += 1
                 print(f"{player.name} finishes in position {position}")
-                players.remove(player)
+                self.players.remove(player)
             else:
                 # Player is out of cards to play
                 if len(player.hand) == 0:
