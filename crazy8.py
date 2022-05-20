@@ -328,33 +328,47 @@ class Player():
             else:
                 top_suit = top_card._suit
             card = None
-            score = str(self.score)
+            score = str(self.score) if self.score > 1  else 'A'
 
             # if we have to pick up cards, try playing a 2 or a Q of Spades
             if game.draw_count > 0 and (top_rank == '2' or (top_rank == 'Q' and top_card._suit == 's')):
-                card = self.hand.play('2')
-                if card:
-                    game.discard_pile.add(card)
-                else:
+                if is_wildcard:
                     card = self.hand.play('Q','s')
                     if card:
                         game.discard_pile.add(card)
+                else:
+                    card = self.hand.play('2')
+                    if card:
+                        game.discard_pile.add(card)
+                        if score == '2':
+                            game.declared_suit = self.hand.get_most_common_suit()
+                    else:
+                        card = self.hand.play('Q','s')
+                        if card:
+                            game.discard_pile.add(card)
             # else if we don't have to pickup stuff
             else:
                 # if no card of same suit or only card of same suit is wildcard play
                 # card of same rank
                 nb_top_suit = len(self.hand[top_suit])
                 cards_of_suit = self.hand[top_suit]
-                if not is_wildcard and (cards_of_suit.isEmpty() or (nb_top_suit == 1 and cards_of_suit.peek()._rank == score)):
-                    card = self.hand.play(top_rank) 
-                    if card:
-                        game.discard_pile.add(card)
-                    # if no card of same rank play a wildcard
-                    else:
+                if (cards_of_suit.isEmpty() or (nb_top_suit == 1 and cards_of_suit.peek()._rank == score)):
+                    # if top_rank is wildcard then play rank = score
+                    if is_wildcard or top_rank == score:
                         card = self.hand.play(score)
                         if card:
                             game.discard_pile.add(card)
                             game.declared_suit = self.hand.get_most_common_suit()
+                    else:
+                        card = self.hand.play(top_rank) 
+                        if card:
+                            game.discard_pile.add(card)
+                        # if no card of same rank play a wildcard
+                        else:
+                            card = self.hand.play(score)
+                            if card:
+                                game.discard_pile.add(card)
+                                game.declared_suit = self.hand.get_most_common_suit()
 
                 # if there are cards of same suit other than wildcard
                 else:
@@ -371,7 +385,6 @@ class Player():
 
             if card and card._rank != score:
                 game.declared_suit = ''
-            print(f"{self.name} plays {card}") if card else None
             return game
 
         else:
@@ -394,19 +407,14 @@ class Game:
     def __str__(self):
         result = '--------------------------------------------------\n'
         result += 'Deck: ' + str(self.deck) + '\n'
-        result += 'Discard: ' + str(self.discard_pile) + '\n'
         result += 'Declared Suit: ' + str(self.declared_suit) + ', '
         result += 'Draw Count: ' + str(self.draw_count) + ', '
-        result += 'Top Card: ' + str(self.discard_pile.peek()) + '\n'
-        
+        result += 'Top Card: ' + str(self.discard_pile.peek()) + '\n' 
         count = 0
         for player in self.players:
             result += str(player) + ': '
             result += 'Score: ' + str(player.score) + ', '
             result += str(player.hand) + '\n'
-            count += len(player.hand)
-        result += 'Nb of cards: ' + str(len(self.deck) + len(self.discard_pile) + count)
-
         return result
 
 
@@ -416,8 +424,6 @@ class Game:
     def reset_deck(self):
         top_card = self.discard_pile.pop()
         discard_size = len(self.discard_pile)
-        print("discard_size: ",discard_size)
-        #print("discard: ", discard_size)
         for i in range(discard_size):
             self.deck.append(self.discard_pile.pop())
         for i in range(7):
@@ -428,7 +434,6 @@ class Game:
     # Safe way of drawing a card from the deck
     # that resets it if it is empty after card is drawn
     def draw_from_deck(self, num):
-        # TODO: better way than to return a LinkedList?
         draw_list = LinkedList()
         if self.deck.isEmpty():
             self.reset_deck()
@@ -443,7 +448,6 @@ class Game:
         result = LinkedList()
 
         self.reset_deck()
-        print("Initial deck: ", self.deck)
         # Each player draws 8 cards
         for player in self.players:
             for i in range(8):
@@ -475,16 +479,22 @@ class Game:
                 # If top card is 2 and draw_count is not 0
                 if (new_top_card._rank == '2' or new_top_card._rank == 'Q') and self.draw_count > 0:
                     print(f"{player.name} draws {self.draw_count} cards")
+                    transcript.write(f"{player.name} draws {self.draw_count} cards \n")
                     card_list = self.draw_from_deck(self.draw_count)
+                    print(player.hand)
                     for i in range(self.draw_count):
+                        print(player.hand)
                         player.hand.add(card_list.pop())
                     self.draw_count = 0
                 else:
                     print(f"{player.name} draws 1 card")
+                    transcript.write(f"{player.name} draws 1 card \n")
                     card_list = self.draw_from_deck(1) 
                     player.hand.add(card_list.pop())
             # Player played a card
             else:
+                print(f"{player.name} played {new_top_card}")
+                transcript.write(f"{player.name} played {new_top_card} \n")
                 # if played a 2 or a Queen, update draw_count
                 if new_top_card._rank == '2':
                     self.draw_count += 2
@@ -503,15 +513,14 @@ class Game:
                 # increment player position    
                 position += 1
                 print(f"{player.name} finishes in position {position}")
+                transcript.write(f"{player.name} finishes in position {position} \n")
                 self.players.remove(player)
-            if len(self.players) == 1:
-                print(f"{self.players.peek().name} finishes last")
-                break
             else:
                 # Player is out of cards to play
                 if len(player.hand) == 0:
                     player.score -= 1
                     print(f"{player.name} is out of cards to play! {player.name} draws {player.score} cards")
+                    transcript.write(f"{player.name} is out of cards to play! {player.name} draws {player.score} cards \n")
                     cards = self.draw_from_deck(player.score)
                     for i in range(player.score):
                         player.hand.add(cards.pop())
@@ -519,8 +528,14 @@ class Game:
                 # Player has a single card left to play
                 elif len(player.hand) == 1:
                     print(f"*Knock, knock* - {player.name} has a single card left!")
+                    transcript.write(f"*Knock, knock* - {player.name} has a single card left! \n")
 
                 self.players.next()
+
+            if len(self.players) == 1:
+                player = self.players.pop()
+                print(f"{player.name} finishes last")
+                transcript.write(f"{player.name} finishes last \n")
         return result
 
 
