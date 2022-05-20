@@ -319,51 +319,59 @@ class Player():
     def play(self, game):
         if(self.strategy == 'naive'):
             top_card = game.discard_pile.peek()
-            top_suit = top_card._suit
             top_rank = top_card._rank
+            # if declared suit is not null and 
+            is_wildcard = False
+            if game.declared_suit != '':
+                top_suit = game.declared_suit
+                is_wildcard = True
+            else:
+                top_suit = top_card._suit
+            card = None
+            score = str(self.score)
 
-            # If forced to pickup play a 2 or a Q of Spades
-            # Check if count is non null in case first card is a 2
-            if game.draw_count > 0 and (top_rank == '2' or (top_rank == 'Q' and top_suit == 's')):
+            # if we have to pick up cards, try playing a 2 or a Q of Spades
+            if game.draw_count > 0 and (top_rank == '2' or (top_rank == 'Q' and top_card._suit == 's')):
                 card = self.hand.play('2')
                 if card:
                     game.discard_pile.add(card)
                 else:
-                    card = self.hand.play('Q', 's')
+                    card = self.hand.play('Q','s')
                     if card:
                         game.discard_pile.add(card)
-            else:  
-                # If same suit play first card of same suit that isnt wildcard 
-                card = None
-                if len(self.hand.cards[top_suit]) > 0:
-                    current = self.hand.cards[top_suit]._head
-                    rank_for_suit = None
-                    print("current value", current.value._rank)
-                    print("score", self.score)
-                    while current.next:
-                        if current.value._rank != str(self.score):
-                            rank_for_suit = current.value._rank
-                            break
-                        current = current.next
-                    card = self.hand.play(top_suit, rank_for_suit)
-
-                if card:
-                    game.discard_pile.add(card)
-                    
-                # If not same suit play card of same rank
-                else:
-                    card = self.hand.play(top_rank)
+            # else if we don't have to pickup stuff
+            else:
+                # if no card of same suit or only card of same suit is wildcard play
+                # card of same rank
+                nb_top_suit = len(self.hand[top_suit])
+                cards_of_suit = self.hand[top_suit]
+                if not is_wildcard and (cards_of_suit.isEmpty() or (nb_top_suit == 1 and cards_of_suit.peek()._rank == score)):
+                    card = self.hand.play(top_rank) 
                     if card:
                         game.discard_pile.add(card)
-                    
-                    # Else play a wildcard and declare most frequent suit
+                    # if no card of same rank play a wildcard
                     else:
-                        card = self.hand.play(str(self.score))
-                        game.declared_suit = self.hand.get_most_common_suit()
+                        card = self.hand.play(score)
                         if card:
                             game.discard_pile.add(card)
-            if card:
-                print(f"{self.name} plays {card}")
+                            game.declared_suit = self.hand.get_most_common_suit()
+
+                # if there are cards of same suit other than wildcard
+                else:
+                    if cards_of_suit.peek():
+                        if cards_of_suit.peek()._rank == score:
+                            current = cards_of_suit._head
+                            current = current.next
+                            next_rank = current.value._rank
+                            card = self.hand.play(top_suit, next_rank)
+                            # pick next card
+                        else:
+                            card = self.hand.play(top_suit)
+                        game.discard_pile.add(card)
+
+            if card and card._rank != score:
+                game.declared_suit = ''
+            print(f"{self.name} plays {card}") if card else None
             return game
 
         else:
@@ -480,7 +488,7 @@ class Game:
                 # if played a 2 or a Queen, update draw_count
                 if new_top_card._rank == '2':
                     self.draw_count += 2
-                elif new_top_card._rank == 'Q':
+                elif new_top_card._rank == 'Q' and new_top_card._suit == 's':
                     self.draw_count += 5
                 # if ace, change the order
                 elif new_top_card._rank == 'A':
@@ -496,6 +504,9 @@ class Game:
                 position += 1
                 print(f"{player.name} finishes in position {position}")
                 self.players.remove(player)
+            if len(self.players) == 1:
+                print(f"{self.players.peek().name} finishes last")
+                break
             else:
                 # Player is out of cards to play
                 if len(player.hand) == 0:
