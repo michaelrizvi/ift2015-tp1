@@ -2,7 +2,7 @@ import math
 import random
 import copy
 
-from crazy8 import LinkedList, CircularLinkedList, Card, Hand, Deck
+from crazy8 import LinkedList, CircularLinkedList, Card, Hand, Deck, Game
 
 if __name__ == '__main__':
     # LinkedList
@@ -80,9 +80,7 @@ if __name__ == '__main__':
     d.append(Card('A','h'))
     d.append(Card('2','h'))
     d.append(Card('3','h'))
-
     random.seed(15)
-
     temp = copy.deepcopy(d)
     assert(str(temp) == '[A♠, 2♠, 3♠, A♡, 2♡, 3♡]')
     temp.shuffle()
@@ -92,6 +90,12 @@ if __name__ == '__main__':
     assert(str(temp) == '[A♡, A♠, 2♡, 2♠, 3♡, 3♠]')
     assert(d.draw() == Card('A','s'))
     print("Deck: All tests passed!")
+
+    game = Game()
+    print(game.deck)
+    game.reset_deck()
+    print(game.deck)
+
     '''
     d = Deck(custom=True)
     d.append(Card('A','s'))
