@@ -20,6 +20,7 @@ if __name__ == '__main__':
     assert(l.pop() == 'b')
     assert(len(l) == 0)
     assert(l.isEmpty())
+    print(l)
     print("LinkedList: All tests passed!")
 
     # CircularLinkedList
