@@ -491,10 +491,11 @@ class Player:
                         for key, value in freq_dict.items():
                             card = self.hand.play(key)
                             if card:
-                                game.discard_pile.add(card)
                                 if card._rank == score:
-                                    game.declared_suit = self.hand.get_most_common_suit()
-                                break
+                                    self.hand.add(card)
+                                else:
+                                    game.discard_pile.add(card)
+                                    break
                         if card is None:
                             if cards_of_suit.peek()._rank == score:
                                 current = cards_of_suit._head
@@ -514,8 +515,8 @@ class Game:
     def __init__(self):
         self.players = CircularLinkedList()
 
-        for i in range(1, 5):
-            self.players.append(Player("Player " + str(i)))
+        self.players.append(Player("Player 1"))
+        self.players.append(Player("Player 2"))
 
         self.deck = Deck()
         self.discard_pile = LinkedList()
@@ -631,6 +632,8 @@ class Game:
                 position += 1
                 print(f"{player.name} finishes in position {position}")
                 transcript.write(f"{player.name} finishes in position {position} \n")
+                if position == 1:
+                    winner = player
                 self.players.remove(player)
             else:
                 # Player is out of cards to play
@@ -659,13 +662,21 @@ class Game:
                 player = self.players.pop()
                 print(f"{player.name} finishes last")
                 transcript.write(f"{player.name} finishes last \n")
+                print(f'{winner.name} wins!')
+
+        winners = open("winners.txt", "a", encoding="utf-8")
+        winners.write(winner.name + '\n')
         return result
 
 
 if __name__ == "__main__":
-    random.seed(420)
-    game = Game()
-    print(game.start(debug=True))
+    for i in range(1000):
+        game = Game()
+        print(game.start(debug=False))
+    file = open("winners.txt", "r", encoding="utf-8")
+    winners = file.read()
+    print(f"Player 1 won {winners.count('Player 1')} times")
+    print(f"Player 2 won {winners.count('Player 2')} times")
 
     # TESTS
     # LinkedList

@@ -1,0 +1,437 @@
+Player 1 played 7♡ 
+Player 2 played Q♡ 
+Player 1 played A♡ 
+Player 2 played 9♡ 
+Player 1 played 4♡ 
+Player 2 played 3♡ 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played 8♠ 
+Player 1 played 7♢ 
+Player 2 played 9♢ 
+Player 1 played 4♢ 
+Player 2 played Q♢ 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played A♢ 
+Player 1 played A♠ 
+Player 2 played 5♠ 
+Player 1 played K♠ 
+Player 2 played K♣ 
+Player 1 played 7♣ 
+Player 2 played 4♣ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 5♣ 
+Player 2 played 2♣ 
+Player 2 is out of cards to play! Player 2 draws 7 cards 
+Player 1 played 2♠ 
+Player 2 played 2♡ 
+Player 1 draws 6 cards 
+Player 2 played 6♡ 
+Player 1 played 5♡ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 8♡ 
+Player 2 played Q♠ 
+Player 1 draws 5 cards 
+Player 2 played 3♠ 
+Player 1 played 9♠ 
+Player 2 played 9♣ 
+Player 1 played A♣ 
+Player 2 draws 1 card 
+Player 1 played Q♣ 
+Player 2 draws 1 card 
+Player 1 played 10♣ 
+Player 2 played 3♣ 
+Player 1 played J♣ 
+Player 1 played J♢ 
+Player 1 played 2♢ 
+Player 2 draws 2 cards 
+Player 1 played 10♢ 
+Player 2 played K♢ 
+Player 1 played K♡ 
+Player 2 draws 1 card 
+Player 1 played 10♡ 
+Player 2 draws 1 card 
+Player 1 played 10♠ 
+Player 2 played J♠ 
+Player 2 played 6♠ 
+Player 1 played 7♠ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 2 draws 1 card 
+Player 1 played 4♠ 
+Player 1 is out of cards to play! Player 1 draws 7 cards 
+Player 2 draws 1 card 
+Player 1 played A♠ 
+Player 2 draws 1 card 
+Player 1 played 9♠ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played 3♠ 
+Player 1 played 3♣ 
+Player 2 played 6♣ 
+Player 1 played 2♣ 
+Player 2 draws 2 cards 
+Player 1 played K♣ 
+Player 2 played 10♣ 
+Player 1 draws 1 card 
+Player 2 played 8♣ 
+Player 1 draws 1 card 
+Player 2 played 8♢ 
+Player 1 played J♢ 
+Player 1 played 4♢ 
+Player 2 played K♢ 
+Player 1 draws 1 card 
+Player 2 played Q♢ 
+Player 1 played Q♡ 
+Player 2 played 9♡ 
+Player 1 played 2♡ 
+Player 2 draws 2 cards 
+Player 1 played 3♡ 
+Player 2 played 4♡ 
+Player 1 played 5♡ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 2 played 5♢ 
+Player 1 draws 1 card 
+Player 2 played 10♢ 
+Player 1 draws 1 card 
+Player 2 played 3♢ 
+Player 1 draws 1 card 
+Player 2 played 6♢ 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 7♣ 
+Player 2 played 7♢ 
+Player 1 draws 1 card 
+Player 2 played 8♠ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 5♠ 
+Player 2 played 5♣ 
+Player 2 is out of cards to play! Player 2 draws 6 cards 
+Player 1 played Q♣ 
+Player 2 played Q♠ 
+Player 1 draws 5 cards 
+Player 2 played K♠ 
+Player 1 played 2♠ 
+Player 2 played 2♢ 
+Player 1 draws 4 cards 
+Player 2 played 6♡ 
+Player 1 played A♡ 
+Player 2 played 7♡ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 8♡ 
+Player 2 played K♡ 
+Player 2 is out of cards to play! Player 2 draws 5 cards 
+Player 1 played J♡ 
+Player 1 played J♣ 
+Player 1 played 4♣ 
+Player 2 played 8♣ 
+Player 1 played 9♣ 
+Player 2 played 5♠ 
+Player 1 played 2♠ 
+Player 2 draws 2 cards 
+Player 1 draws 1 card 
+Player 2 played 8♠ 
+Player 1 played 8♢ 
+Player 2 played K♢ 
+Player 1 played A♢ 
+Player 2 played A♠ 
+Player 1 played A♣ 
+Player 2 played 5♡ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 draws 1 card 
+Player 2 played J♠ 
+Player 2 is out of cards to play! Player 2 draws 4 cards 
+Player 2 played 7♠ 
+Player 1 played 7♢ 
+Player 2 played J♢ 
+Player 2 played 3♢ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 9♢ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played 9♠ 
+Player 1 played 4♠ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played Q♠ 
+Player 1 draws 5 cards 
+Player 2 played Q♢ 
+Player 1 played 10♢ 
+Player 2 draws 1 card 
+Player 1 played 6♢ 
+Player 2 draws 1 card 
+Player 1 played 6♣ 
+Player 2 played K♣ 
+Player 1 played Q♣ 
+Player 2 played 2♣ 
+Player 1 draws 2 cards 
+Player 2 played 7♣ 
+Player 1 played 5♣ 
+Player 2 draws 1 card 
+Player 1 played 3♣ 
+Player 2 played 4♡ 
+Player 1 played K♠ 
+Player 2 played 6♠ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 10♠ 
+Player 2 draws 1 card 
+Player 1 played 10♡ 
+Player 2 played 9♡ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 3♡ 
+Player 2 played 2♡ 
+Player 2 is out of cards to play! Player 2 draws 3 cards 
+Player 1 draws 2 cards 
+Player 2 played 3♠ 
+Player 1 played 10♢ 
+Player 2 played 5♢ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 4♢ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 3♢ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 7♣ 
+Player 2 played 10♣ 
+Player 1 played Q♣ 
+Player 2 played Q♠ 
+Player 1 draws 5 cards 
+Player 2 played 5♠ 
+Player 1 played K♠ 
+Player 2 draws 1 card 
+Player 1 played 10♠ 
+Player 2 played 2♠ 
+Player 1 draws 2 cards 
+Player 2 draws 1 card 
+Player 1 played 7♢ 
+Player 2 draws 1 card 
+Player 1 played 4♣ 
+Player 2 draws 1 card 
+Player 1 played A♣ 
+Player 2 played A♡ 
+Player 1 played 8♡ 
+Player 2 played 9♡ 
+Player 1 played Q♡ 
+Player 2 played J♡ 
+Player 2 played 5♡ 
+Player 1 draws 1 card 
+Player 2 played 7♡ 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 6♡ 
+Player 2 draws 1 card 
+Player 1 played 6♠ 
+Player 2 played A♠ 
+Player 1 draws 1 card 
+Player 2 played 4♠ 
+Player 1 draws 1 card 
+Player 2 played 3♡ 
+Player 1 played 8♢ 
+Player 2 played A♢ 
+Player 1 played 9♢ 
+Player 2 played J♢ 
+Player 2 draws 1 card 
+Player 1 played Q♢ 
+Player 2 played K♢ 
+Player 1 draws 1 card 
+Player 2 played K♣ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played 2♣ 
+Player 2 draws 2 cards 
+Player 1 played J♣ 
+Player 1 played 5♣ 
+Player 2 played 9♣ 
+Player 1 played 6♣ 
+Player 2 played 3♣ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 draws 1 card 
+Player 2 played 7♠ 
+Player 2 is out of cards to play! Player 2 draws 2 cards 
+Player 1 draws 1 card 
+Player 2 played J♠ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 2 draws 1 card 
+Player 1 played 9♠ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 8♠ 
+Player 2 draws 1 card 
+Player 1 played 8♣ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played 8♡ 
+Player 1 played 4♡ 
+Player 2 played 6♡ 
+Player 1 draws 1 card 
+Player 2 played 7♡ 
+Player 1 played 7♣ 
+Player 2 draws 1 card 
+Player 1 played 2♠ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 2 draws 2 cards 
+Player 1 played 2♢ 
+Player 1 is out of cards to play! Player 1 draws 6 cards 
+Player 2 draws 2 cards 
+Player 1 played 9♢ 
+Player 2 played 3♢ 
+Player 1 draws 1 card 
+Player 2 played 6♢ 
+Player 1 played 6♣ 
+Player 2 played K♡ 
+Player 1 played J♡ 
+Player 1 played Q♡ 
+Player 2 played 10♡ 
+Player 1 draws 1 card 
+Player 2 played 10♣ 
+Player 1 played 3♣ 
+Player 2 played Q♣ 
+Player 1 played 5♣ 
+Player 2 played 9♣ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played J♣ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 6♠ 
+Player 2 played J♠ 
+Player 2 played K♠ 
+Player 1 played 5♠ 
+Player 2 played 3♠ 
+Player 1 played 10♠ 
+Player 2 played Q♠ 
+Player 1 draws 5 cards 
+Player 2 played Q♢ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 1 played K♢ 
+Player 2 played 8♢ 
+Player 2 is out of cards to play! Player 2 draws 1 cards 
+Player 1 played 5♢ 
+Player 2 draws 1 card 
+Player 1 played 10♢ 
+Player 2 draws 1 card 
+Player 1 played 7♢ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played A♣ 
+Player 1 played A♠ 
+Player 2 played 4♠ 
+Player 1 played 4♢ 
+Player 2 draws 1 card 
+Player 1 played 4♣ 
+Player 2 played K♣ 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 2♣ 
+Player 2 draws 2 cards 
+Player 1 played 2♡ 
+Player 2 draws 2 cards 
+Player 1 played 5♡ 
+Player 2 played Q♡ 
+Player 1 played A♡ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 2 played 9♡ 
+Player 1 draws 1 card 
+Player 2 played 3♡ 
+Player 1 draws 1 card 
+Player 2 played 3♣ 
+Player 1 played 9♣ 
+Player 2 played 7♣ 
+Player 1 draws 1 card 
+Player 2 played 6♣ 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 played 10♣ 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 draws 1 card 
+Player 1 draws 1 card 
+Player 2 played 10♢ 
+Player 1 played 2♢ 
+Player 2 played Q♠ 
+Player 1 draws 7 cards 
+Player 2 played 7♠ 
+Player 1 played 4♠ 
+Player 2 played 4♢ 
+Player 1 played K♢ 
+Player 2 played 7♢ 
+Player 1 played 9♢ 
+Player 2 played 8♢ 
+Player 1 played A♢ 
+Player 2 played 5♢ 
+Player 1 played 5♣ 
+Player 2 draws 1 card 
+Player 1 played A♣ 
+Player 2 draws 1 card 
+Player 1 played A♠ 
+Player 2 played 3♠ 
+Player 1 played K♠ 
+Player 2 draws 1 card 
+Player 1 played 8♠ 
+Player 2 draws 1 card 
+Player 1 played 8♡ 
+Player 2 played J♡ 
+Player 2 played 6♡ 
+Player 1 played 7♡ 
+Player 2 draws 1 card 
+Player 1 played 4♡ 
+Player 2 played 4♣ 
+Player 1 played 6♠ 
+*Knock, knock* - Player 1 has a single card left! 
+Player 2 draws 1 card 
+Player 1 played K♡ 
+Player 1 is out of cards to play! Player 1 draws 5 cards 
+Player 2 played 10♡ 
+Player 1 played 5♠ 
+Player 2 played J♣ 
+Player 2 played J♢ 
+*Knock, knock* - Player 2 has a single card left! 
+Player 2 played 6♢ 
+Player 2 finishes in position 1 
+Player 1 finishes last 
