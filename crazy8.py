@@ -1,5 +1,5 @@
-# Michael Rizvi-Martel, 20223775
-# Prénom, Nom, Matricule
+# Michael, Rizvi-Martel, 20223775
+# Jie, Bao, 20047494 
 
 import math
 import random
@@ -7,7 +7,6 @@ import copy
 
 
 class LinkedList:
-    # TODO standardize empty list check! either size==0 or head is None
     class _Node:
         def __init__(self, v, n=None):
             self.value = v
@@ -19,7 +18,7 @@ class LinkedList:
 
     def __str__(self):
         if self._size == 0:
-            return "[]"
+            return '[]'
         result = "["
         current = self._head
         while current:
@@ -96,8 +95,8 @@ class CircularLinkedList(LinkedList):
         super().__init__()
 
     def __str__(self):
-        if self._head is None:
-            return "[]"
+        if self._size == 0:
+            return '[]'
         result = "["
         current = self._head
         for i in range(self._size):
@@ -296,9 +295,6 @@ class Deck(LinkedList):
         for i in range(k - 1):
             current = current.next
 
-        # print(len(self))
-        # print(k)
-        # print(self)
         # Create other deck
         other = current.next
         other_deck = Deck(custom=True)
@@ -350,7 +346,6 @@ class Player:
         if self.strategy == "naive":
             top_card = game.discard_pile.peek()
             top_rank = top_card._rank
-            # if declared suit is not null and
             is_wildcard = False
             if game.declared_suit != "":
                 top_suit = game.declared_suit
@@ -378,7 +373,7 @@ class Player:
                         card = self.hand.play("Q", "s")
                         if card:
                             game.discard_pile.add(card)
-            # else if we don't have to pickup stuff
+            # if we don't have to pickup cards 
             else:
                 # if no card of same suit or only card of same suit is wildcard play
                 # card of same rank
@@ -408,35 +403,31 @@ class Player:
                 else:
     
                     if cards_of_suit.peek():
-                        #for freq in freqs:
-                        #    card = self.hand.play(dict[freq])
-                        #    if card:
-                        #        game.discard_pile.add(card)
-                        #        break
+                        # if card is wildcard pick next
                         if cards_of_suit.peek()._rank == score:
                             current = cards_of_suit._head
                             current = current.next
                             next_rank = current.value._rank
                             card = self.hand.play(top_suit, next_rank)
-                            # pick next card
                         else:
                             card = self.hand.play(top_suit)
                         game.discard_pile.add(card)
 
+            # if played card not wildcard reinit declared_suit
             if card and card._rank != score:
                 game.declared_suit = ""
             return game
 
-        elif strategy == 'cardcounting':
+        elif self.strategy == 'cardcounting':
             top_card = game.discard_pile.peek()
             # Initialize dict of frequences by rank
             freq_dict = dict()
             current = game.discard_pile._head
             while current.next:
-                if current.value._rank in freq_dict[current.value._rank]:
-                    freq_dict[current.value._rank] += 1
-                else:
+                if current.value._rank not in freq_dict.keys():
                     freq_dict[current.value._rank] = 1
+                else:
+                    freq_dict[current.value._rank] += 1
                 current = current.next
             top_rank = top_card._rank
             # if declared suit is not null and
@@ -467,7 +458,7 @@ class Player:
                         card = self.hand.play("Q", "s")
                         if card:
                             game.discard_pile.add(card)
-            # else if we don't have to pickup stuff
+            # else if we don't have to pickup cards 
             else:
                 # if no card of same suit or only card of same suit is wildcard play
                 # card of same rank
@@ -496,16 +487,23 @@ class Player:
                 # if there are cards of same suit other than wildcard
                 else:
                     if cards_of_suit.peek():
-                        # TODO: add loop to choose most frequent rank :
-                        if cards_of_suit.peek()._rank == score:
-                            current = cards_of_suit._head
-                            current = current.next
-                            next_rank = current.value._rank
-                            card = self.hand.play(top_suit, next_rank)
-                            # pick next card
-                        else:
-                            card = self.hand.play(top_suit)
-                        game.discard_pile.add(card)
+                        freq_dict = dict(sorted(freq_dict.items(), key=lambda item: item[1], reverse=True))
+                        for key, value in freq_dict.items():
+                            card = self.hand.play(key)
+                            if card:
+                                game.discard_pile.add(card)
+                                if card._rank == score:
+                                    game.declared_suit = self.hand.get_most_common_suit()
+                                break
+                        if card is None:
+                            if cards_of_suit.peek()._rank == score:
+                                current = cards_of_suit._head
+                                current = current.next
+                                next_rank = current.value._rank
+                                card = self.hand.play(top_suit, next_rank)
+                            else:
+                                card = self.hand.play(top_suit)
+                            game.discard_pile.add(card)
 
             if card and card._rank != score:
                 game.declared_suit = ""
@@ -667,7 +665,7 @@ class Game:
 if __name__ == "__main__":
     random.seed(420)
     game = Game()
-    print(game.start(debug=False))
+    print(game.start(debug=True))
 
     # TESTS
     # LinkedList
